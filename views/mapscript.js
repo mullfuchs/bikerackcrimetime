@@ -66,11 +66,21 @@ function addMarkers(inMap){
         marker.addListener('click', function() {
           inMap.setZoom(16);
           inMap.setCenter(marker.getPosition());
+          heatMapLookup(0);
         });
 
         marker.setMap(inMap);
       }
 
     });
+}
+
+function heatMapLookup(marker){
+  $.getJSON("stolenData.json", function(json){
+    data = $.parseJSON(json);
+    //var temp = readJSON;
+    console.log(data[0]);
+    $("#theft_prob").html(data[0].bins);
+  });
 }
 
