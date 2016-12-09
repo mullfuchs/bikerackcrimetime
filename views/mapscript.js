@@ -29,7 +29,12 @@ function initMap() {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
+
+  addMarkers(map);
+
 }
+
+//google.maps.event.addDomListener(window, 'load', initMap);
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
@@ -39,39 +44,31 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 //https://data.seattle.gov/resource/fxh3-tqdm.json
-$.ajax({
+
+function addMarkers(inMap){
+    $.ajax({
     url: "https://data.seattle.gov/resource/fxh3-tqdm.json",
     type: "GET",
     data: {
       "$limit" : 100,
       "$$app_token" : "97k4LhfmpIDqhsNhi00jZAyl3"
     }
-}).done(function (data) {
-  // body...
-  //alert("Retrieved " + data.length + " records from the dataset!");
-  //console.log(data);
-  //bikeRacks = data;
+    }).done(function (data) {
 
-  for(var i = 0; i < data.length; i++){
-    //console.log(data[i].unitid);
-     console.log(parseFloat( data[i].latitude ));
-     console.log(parseFloat( data[i].longitude));
-    var theLatLng = {lat: parseFloat( data[i].latitude ), lng: parseFloat( data[i].longitude )};
+      for(var i = 0; i < data.length; i++){
+        //console.log(data[i].unitid);
+         //console.log(parseFloat( data[i].latitude ));
+         //console.log(parseFloat( data[i].longitude));
+        var theLatLng = new google.maps.LatLng(parseFloat( data[i].latitude ), parseFloat(data[i].longitude) );
 
-    var marker = new google.maps.Marker({
-      position: theLatLng,
-      title: data[i].unitid
+        var marker = new google.maps.Marker({
+          position: theLatLng,
+          title: data[i].unitid
+        });
+
+        marker.setMap(inMap);
+      }
+
     });
-
-    marker.setMap(map);
-  }
-
-  // var marker = new google.maps.Marker({
-  //   position: myLatLng,
-  //   map: map,
-  //   title: 'Hello World!'
-  // });
-
-});
-
+}
 
