@@ -20,7 +20,7 @@ function initMap() {
       };
 
       infoWindow.setPosition(pos);
-      infoWindow.setContent('Location found.');
+      infoWindow.setContent('You Are Here');
       map.setCenter(pos);
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
@@ -56,14 +56,16 @@ function addMarkers(inMap){
     }).done(function (data) {
 
       for(var i = 0; i < data.length; i++){
-        //console.log(data[i].unitid);
-         //console.log(parseFloat( data[i].latitude ));
-         //console.log(parseFloat( data[i].longitude));
         var theLatLng = new google.maps.LatLng(parseFloat( data[i].latitude ), parseFloat(data[i].longitude) );
 
         var marker = new google.maps.Marker({
           position: theLatLng,
           title: data[i].unitid
+        });
+
+        marker.addListener('click', function() {
+          inMap.setZoom(16);
+          inMap.setCenter(marker.getPosition());
         });
 
         marker.setMap(inMap);
