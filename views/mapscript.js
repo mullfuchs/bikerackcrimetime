@@ -2,9 +2,10 @@
 
 var map;
 
-var bikeRacks;
+var bikeRacks = [];
 
 function initMap() {
+
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -34.397, lng: 150.644},
     zoom: 14
@@ -63,14 +64,21 @@ function addMarkers(inMap){
           title: data[i].unitid
         });
 
-        marker.addListener('click', function() {
-          inMap.setZoom(16);
-          inMap.setCenter(marker.getPosition());
-          heatMapLookup(0);
-        });
+        bikeRacks[i] = marker;
+
+        //console.log(bikeRacks[i]);
+        //console.log(marker);
+
+        // marker.addListener('click', function() {
+        //   inMap.setZoom(16);
+        //   inMap.setCenter(marker.getPosition());
+        //   heatMapLookup(0);
+        // });
 
         marker.setMap(inMap);
       }
+
+      addClickListeners(inMap, bikeRacks);
 
     });
 }
@@ -82,5 +90,16 @@ function heatMapLookup(marker){
     console.log(data[0]);
     $("#theft_prob").html(data[0].bins);
   });
+}
+
+function addClickListeners(map, _bikeRacks){
+  for(var i = 0; i < _bikeRacks.length; i++){
+    _bikeRacks[i].addListener('click', function(){
+      console.log(_bikeRacks[i]);
+      map.setZoom(16);
+      map.setCenter(_bikeRacks[i].getPosition());
+      heatMapLookup(i);
+    })
+  }
 }
 
