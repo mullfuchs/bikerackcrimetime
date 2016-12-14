@@ -4,9 +4,9 @@ var map;
 
 var bikeRacks = [];
 
-function initMap() {
+function initMap(map) {
 
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -34.397, lng: 150.644},
     zoom: 14
   });
@@ -35,7 +35,12 @@ function initMap() {
 
 }
 
-google.maps.event.addDomListener(window, 'load', initMap);
+// google.maps.event.addDomListener(window, 'load', function(){
+//   var map;
+//   initMap(map);
+//   addMarkers(map);
+
+// });
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
