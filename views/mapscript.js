@@ -1,8 +1,14 @@
 //mapscript.js
+$( document ).ready(function() {
+    console.log( "ready!" );
+    var map;
 
-var map;
+    var bikeRacks = [];
+    initMap(map);
+    addMarkers(map, bikeRacks);
+});
 
-var bikeRacks = [];
+
 
 function initMap(map) {
 
@@ -31,7 +37,7 @@ function initMap(map) {
     handleLocationError(false, infoWindow, map.getCenter());
   }
 
-  addMarkers(map);
+  //addMarkers(map);
 
 }
 
@@ -51,7 +57,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 //https://data.seattle.gov/resource/fxh3-tqdm.json
 
-function addMarkers(inMap){
+function addMarkers(inMap, bikeRacks){
     $.ajax({
     url: "https://data.seattle.gov/resource/fxh3-tqdm.json",
     type: "GET",
@@ -82,7 +88,7 @@ function addMarkers(inMap){
 
         marker.setMap(inMap);
       }
-
+      console.log('added markers', inMap);
       addClickListeners(inMap, bikeRacks);
 
     });
