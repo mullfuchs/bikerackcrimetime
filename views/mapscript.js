@@ -4,7 +4,7 @@ $( document ).ready(function() {
     var map;
 
     var bikeRacks = [];
-    initMap(map);
+    map = initMap(map);
     addMarkers(map, bikeRacks);
 });
 
@@ -36,6 +36,9 @@ function initMap(map) {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
+
+
+  return map;
 
   //addMarkers(map);
 
@@ -75,21 +78,18 @@ function addMarkers(inMap, bikeRacks){
           title: data[i].unitid
         });
 
-        bikeRacks[i] = marker;
 
-        //console.log(bikeRacks[i]);
-        //console.log(marker);
-
-        // marker.addListener('click', function() {
+        // google.maps.event.addListener(marker, 'click', function() {
         //   inMap.setZoom(16);
-        //   inMap.setCenter(marker.getPosition());
-        //   heatMapLookup(0);
+        //   inMap.setCenter(marker.getPosition());     
         // });
+
+        bikeRacks.push(marker);
 
         marker.setMap(inMap);
       }
       console.log('added markers', inMap);
-      addClickListeners(inMap, bikeRacks);
+      //addClickListeners(inMap, bikeRacks);
 
     });
 }
