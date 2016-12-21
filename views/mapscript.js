@@ -33,23 +33,15 @@ function initMap(map) {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
-    // Browser doesn't support Geolocation
+
     handleLocationError(false, infoWindow, map.getCenter());
   }
 
 
   return map;
 
-  //addMarkers(map);
-
 }
 
-// google.maps.event.addDomListener(window, 'load', function(){
-//   var map;
-//   initMap(map);
-//   addMarkers(map);
-
-// });
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
@@ -58,7 +50,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: Your browser doesn\'t support geolocation.');
 }
 
-//https://data.seattle.gov/resource/fxh3-tqdm.json
 
 function addMarkers(inMap, bikeRacks){
     $.ajax({
@@ -66,7 +57,7 @@ function addMarkers(inMap, bikeRacks){
     type: "GET",
     data: {
       "$limit" : 100,
-      "$$app_token" : "97k4LhfmpIDqhsNhi00jZAyl3"
+      "$$app_token" : "XXXXX"
     }
     }).done(function (data) {
 
@@ -78,18 +69,11 @@ function addMarkers(inMap, bikeRacks){
           title: data[i].unitid
         });
 
-
-        // google.maps.event.addListener(marker, 'click', function() {
-        //   inMap.setZoom(16);
-        //   inMap.setCenter(marker.getPosition());     
-        // });
-
         bikeRacks.push(marker);
 
         marker.setMap(inMap);
       }
       console.log('added markers', inMap);
-      //addClickListeners(inMap, bikeRacks);
 
     });
 }
